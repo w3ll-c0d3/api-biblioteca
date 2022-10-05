@@ -18,8 +18,6 @@ public class Aluno {
 
 	@Column(name = "numeromatriculaaluno")
 	private int numeroMatriculaAluno;
-	
-	@Column(name = "nome")
 	private String nome;
 	
 	@Column(name = "datanascimento")
@@ -27,9 +25,12 @@ public class Aluno {
 	
 	@Column(name = "cpf")
 	private String cpf;
-	
+
 	@Column(name = "logradouro")
 	private String logradouro;
+	
+	@Column(name = "numerologradouro")
+	private String numeroLogradouro;
 	
 	@Column(name = "complemento")
 	private String complemento;
@@ -44,6 +45,14 @@ public class Aluno {
 	private Set<Emprestimo> emprestimos;
 	
 //	Getters and Setters
+	public String getNumeroLogradouro() {
+		return numeroLogradouro;
+	}
+	
+	public void setNumeroLogradouro(String numeroLogradouro) {
+		this.numeroLogradouro = numeroLogradouro;
+	}
+	
 	public Set<Emprestimo> getEmprestimos() {
 		return emprestimos;
 	}
