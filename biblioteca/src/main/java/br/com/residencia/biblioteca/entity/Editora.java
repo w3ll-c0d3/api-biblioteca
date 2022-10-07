@@ -47,6 +47,5 @@ public class Editora {
 	public void setLivros(Set<Livro> livros) {
 		this.livros = livros;
 	}
-
 }
 

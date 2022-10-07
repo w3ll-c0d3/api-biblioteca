@@ -17,20 +17,13 @@ import javax.persistence.Table;
 public class Emprestimo {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "codigoemprestimo")
 	private int codigoEmprestimo;
-	
-	@Column(name = "numeromatriculaaluno")
-	private int numeroMatriculaAluno;
-	
-	@Column(name = "codigolivro")
-	private int codigoLivro;
 	
 	@Column(name = "dataemprestimo")
 	private Instant dataEmprestimo;
 
-	@Column(name = "dataEntrega")
+	@Column(name = "dataentrega")
 	private Instant dataEntrega;
 	
 	@Column(name = "valoremprestimo")
@@ -43,7 +36,6 @@ public class Emprestimo {
 	@OneToOne
 	@JoinColumn(name = "codigolivro", referencedColumnName = "codigolivro")
 	private Livro livro;
-	
 
 //	Getters and Setters
 	public Aluno getAluno() {
@@ -68,22 +60,6 @@ public class Emprestimo {
 
 	public void setCodigoEmprestimo(int codigoEmprestimo) {
 		this.codigoEmprestimo = codigoEmprestimo;
-	}
-
-	public int getNumeroMatriculaAluno() {
-		return numeroMatriculaAluno;
-	}
-
-	public void setNumeroMatriculaAluno(int numeroMatriculaAluno) {
-		this.numeroMatriculaAluno = numeroMatriculaAluno;
-	}
-
-	public int getCodigoLivro() {
-		return codigoLivro;
-	}
-
-	public void setCodigoLivro(int codigoLivro) {
-		this.codigoLivro = codigoLivro;
 	}
 
 	public Instant getDataEmprestimo() {

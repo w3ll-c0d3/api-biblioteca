@@ -16,7 +16,6 @@ import javax.persistence.Table;
 public class Livro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
 	@Column(name = "codigolivro")
 	private int codigoLivro;
 	
@@ -26,22 +25,6 @@ public class Livro {
 	@Column(name = "nomeautor")
 	private String nomeAutor;
 	
-	public Editora getEditora() {
-		return editora;
-	}
-
-	public void setEditora(Editora editora) {
-		this.editora = editora;
-	}
-
-	public Emprestimo getEmprestimo() {
-		return emprestimo;
-	}
-
-	public void setEmprestimo(Emprestimo emprestimo) {
-		this.emprestimo = emprestimo;
-	}
-
 	@Column(name = "datalancamento")
 	private Instant dataLancamento;
 	
@@ -54,8 +37,24 @@ public class Livro {
 	
 	@OneToOne(mappedBy = "livro")
 	private Emprestimo emprestimo;
-	
+
 //	Getters and Setters
+	public Editora getEditora() {
+		return editora;
+	}
+	
+	public void setEditora(Editora editora) {
+		this.editora = editora;
+	}
+	
+	public Emprestimo getEmprestimo() {
+		return emprestimo;
+	}
+	
+	public void setEmprestimo(Emprestimo emprestimo) {
+		this.emprestimo = emprestimo;
+	}
+	
 	public int getCodigoLivro() {
 		return codigoLivro;
 	}
