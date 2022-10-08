@@ -35,12 +35,18 @@ public class AlunoController {
 
 	@GetMapping("/search/{id}")
 	public ResponseEntity<Aluno> getAlunoById(@PathVariable Integer id) {
-		return new ResponseEntity<>(alunoService.getAlunoById(id), HttpStatus.OK);
+		Aluno aluno = alunoService.getAlunoById(id);
+		if(aluno != null) {
+			return new ResponseEntity<>(aluno, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
+		}
+		
 	}
 
 	@PostMapping("/save")
 	public ResponseEntity<Aluno> saveAluno(@RequestBody Aluno aluno) {
-		return new ResponseEntity<>(alunoService.saveAluno(aluno), HttpStatus.OK);
+		return new ResponseEntity<>(alunoService.saveAluno(aluno), HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/delete/{id}")

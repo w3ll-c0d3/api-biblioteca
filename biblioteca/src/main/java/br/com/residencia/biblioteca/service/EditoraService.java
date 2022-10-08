@@ -32,17 +32,18 @@ public class EditoraService {
 	}
 	
 	public Editora deleteEditora(Integer id) {
-		editoraRepository.deleteById(id);
+		if(getEditoraById(id) != null) {
+			editoraRepository.deleteById(id);
+		}
 		return getEditoraById(id);
 	}
 		
-//	public Boolean deleteEditoraBool(Integer id) {
-//		EditoraRepository.deleteById(id);
-//		if(getEditoraById(id) != null) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
+	public Boolean deleteEditoraBool(Integer id) {
+		if(getEditoraById(id) != null) {	
+			editoraRepository.deleteById(id);
+			return true;
+		} 
+		return true;
+	}
 }
 	
