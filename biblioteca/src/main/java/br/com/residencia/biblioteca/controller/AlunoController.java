@@ -41,7 +41,6 @@ public class AlunoController {
 		} else {
 			return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
 		}
-		
 	}
 
 	@PostMapping("/save")
