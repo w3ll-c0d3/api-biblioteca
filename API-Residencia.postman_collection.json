@@ -1,0 +1,387 @@
+{
+	"info": {
+		"_postman_id": "9b746a0d-b3d0-4b59-a5c6-a15019e885fa",
+		"name": "API-Residencia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Aluno",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAlunoById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/search/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"search",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveAluno",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\":\"Santos\",\n    \"dataNascimento\": \"2022-06-02T21:34:33.616Z\",\n    \"cpf\": \"12345678908\",\n    \"logradouro\": \"Rua X\",\n    \"numeroLogradouro\": \"100\",\n    \"complemento\": \"Casa A\",\n    \"bairro\": \"Bairro X\",\n    \"cidade\": \"Petrópolis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/alunos/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteAluno",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/alunos/delete/10",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"delete",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateAluno",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Santos\",\n    \"dataNascimento\": \"2020-06-02T21:34:33.616Z\",\n    \"cpf\": \"12345678904\",\n    \"logradouro\": \"Rua X\",\n    \"numeroLogradouro\": \"100\",\n    \"complemento\": \"Casa A\",\n    \"bairro\": \"Bairro Y\",\n    \"cidade\": \"Petrópolis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/alunos/update/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"alunos",
+								"update",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Editora",
+			"item": [
+				{
+					"name": "get All Editora",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/editoras/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"editoras",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEditoraById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/editoras/search/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"editoras",
+								"search",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveEditora",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Editora1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/editoras/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"editoras",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEditora",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/editora/delete/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"editora",
+								"delete",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "updateEditora",
+							"host": [
+								"updateEditora"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveDTO",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\":\"Editora\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/editoras/dto",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"editoras",
+								"dto"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Emprestimo",
+			"item": [
+				{
+					"name": "getAll Emprestimo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/emprestimo/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprestimo",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dataEmprestimo\": null,\n    \"dataEntrega\": null,\n    \"valorEmprestimo\": 100,\n    \"aluno\": {\n        \"numeromatriculaaluno\": 1\n    },\n    \"livro\": {\n        \"nomeLivro\": \"Livro1\",\n        \"nomeAutor\": \"Autor1\",\n        \"dataLancamento\": null,\n        \"codigoIsbn\": 666,\n        \"editora\": 1\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/emprestimos/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprestimos",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "saveEmprestimo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/emprestimos/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"emprestimos",
+								"save"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Livro",
+			"item": [
+				{
+					"name": "saveLivro",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nomeLivro\": \"Livro1\",\n    \"nomeAutor\": \"Autor1\",\n    \"dataLancamento\": null,\n    \"codigoIsbn\": 666,\n    \"editora\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/livros/save",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"livros",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll Livros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/livros/search",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"livros",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

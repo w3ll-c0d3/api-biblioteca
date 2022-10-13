@@ -1,8 +1,13 @@
 package br.com.residencia.biblioteca.service;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.residencia.biblioteca.dto.EditoraDTO;
 import br.com.residencia.biblioteca.entity.Editora;
 import br.com.residencia.biblioteca.repository.EditoraRepository;
 
@@ -11,8 +16,35 @@ public class EditoraService {
 	@Autowired
 	EditoraRepository editoraRepository;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
 	public List<Editora> getAllEditora() {
 		return editoraRepository.findAll();	
+	}
+	
+	private EditoraDTO converteEntitytoDTO(Editora editora) {
+		EditoraDTO editoraDTO = new EditoraDTO();
+		editoraDTO = (modelMapper.map(editora, EditoraDTO.class));
+		return editoraDTO;	
+	}
+	
+	public List<EditoraDTO> getAllEditoraDTO() {
+		List<Editora> editora = new ArrayList<Editora>();
+		List<EditoraDTO> editoraDTO = new ArrayList<EditoraDTO>();
+		editora = getAllEditora();
+		editora.forEach(edt -> {
+			editoraDTO.add(converteEntitytoDTO(edt));
+		});
+		return editoraDTO;
+	}
+	
+	public EditoraDTO getEditoraDtoById(Integer id) {
+		Editora editora = editoraRepository.findById(id).orElse(null);
+		if(editora != null) {
+			return converteEntitytoDTO(editora);
+		}
+		return null;
 	}
 	
 	public Editora getEditoraById(Integer id) {
@@ -22,6 +54,18 @@ public class EditoraService {
 	
 	public Editora saveEditora(Editora editora) {
 		return editoraRepository.save(editora);
+	}
+	
+	public EditoraDTO saveEditoraDTO(EditoraDTO editoraDTO) {
+		Editora editora = new Editora();
+		editora.setNome(editoraDTO.getNome());
+		
+		Editora novaEditora = editoraRepository.save(editora);
+		EditoraDTO novaEditoraDTO = new EditoraDTO();
+		novaEditoraDTO.setCodigoEditora(novaEditora.getCodigoEditora());
+		novaEditoraDTO.setNome(novaEditora.getNome());
+		
+		return novaEditoraDTO;
 	}
 	
 	public Editora updateEditora(Editora Editora, Integer id) {
