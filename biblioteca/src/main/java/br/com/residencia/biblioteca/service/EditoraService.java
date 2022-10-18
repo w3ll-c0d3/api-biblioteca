@@ -1,12 +1,16 @@
 package br.com.residencia.biblioteca.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import br.com.residencia.biblioteca.dto.ConsultaCnpjDTO;
 import br.com.residencia.biblioteca.dto.EditoraDTO;
 import br.com.residencia.biblioteca.dto.LivroDTO;
 import br.com.residencia.biblioteca.entity.Editora;
@@ -73,13 +77,40 @@ public class EditoraService {
 	public Editora getEditoraById(Integer id) {
 		return editoraRepository.findById(id).orElse(null);
 	}
+	
+	public ConsultaCnpjDTO consultaCnpjApiExterna(String cnpj) {
+		RestTemplate restTemplate = new RestTemplate();
+		String uri = "https://receitaws.com.br/v1/cnpj/{cnpj}";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("cnpj", cnpj);
+		
+		ConsultaCnpjDTO consultaCnpjDTO = restTemplate.getForObject(uri, ConsultaCnpjDTO.class, params);
+		return consultaCnpjDTO;
+	}
 
 //	Save
 	public Editora saveEditora(Editora editora) {
+		editora = formatToUpper(editora);
 		return editoraRepository.save(editora);
 	}
 	
+	public Editora saveFromExternalSource(String cnpj) {
+		ConsultaCnpjDTO cnpjResponse = consultaCnpjApiExterna(cnpj);
+		Editora editora = new Editora();
+		editora.setNome(cnpjResponse.getNome());
+		editora = formatToUpper(editora);
+		return editoraRepository.save(editora);
+	}
+	
+	public List<Editora> saveAllEditoras(List<Editora> editora) {
+		editora.forEach(edt -> {
+			formatToUpper(edt);
+		});
+		return editoraRepository.saveAll(editora);
+	}
+	
 	public EditoraDTO saveEditoraDTO(EditoraDTO editoraDTO) {
+		editoraDTO = formatToUpperDTO(editoraDTO);
 		Editora editora = toEntity(editoraDTO);
 		Editora novaEditora = editoraRepository.save(editora);
 		
@@ -87,6 +118,13 @@ public class EditoraService {
 		return editoraAtualizadaDTO;
 	}
 	
+	public List<EditoraDTO> saveAllEditorasDTO(List<EditoraDTO> editoraDTO) {
+		editoraDTO.forEach(edt -> {
+			formatToUpperDTO(edt);
+			editoraRepository.save(toEntity(edt));
+		});
+		return editoraDTO;
+	}
 //	public EditoraDTO saveEditoraDTOotimizado(EditoraDTO editoraDTO) {
 //		Editora novaEditora = editoraRepository.save(toEntity(editoraDTO));	
 //		return converteEntitytoDTO(novaEditora);
@@ -94,12 +132,14 @@ public class EditoraService {
 
 //	Update
 	public Editora updateEditora(Editora editora, Integer id) {
+		editora = formatToUpper(editora);
 		Editora editoraExistenteNoBanco = getEditoraById(id);
 		editoraExistenteNoBanco.setNome(editora.getNome());
 		return editoraRepository.save(editoraExistenteNoBanco);
 	}
 	
 	public EditoraDTO updateEditoraDTO(EditoraDTO editoraDTO, Integer id) {
+		editoraDTO = formatToUpperDTO(editoraDTO);
 		Editora editoraExistenteNoBanco = getEditoraById(id);
 		EditoraDTO editoraAtualizadaDTO = new EditoraDTO();
 		if(editoraExistenteNoBanco != null) {
@@ -141,6 +181,17 @@ public class EditoraService {
 		Editora editora = new Editora();
 		editora.setNome(editoraDTO.getNome());
 		return editora;	
+	}
+	
+//	Format
+	private Editora formatToUpper(Editora editora) {
+		editora.setNome(editora.getNome().toUpperCase());
+		return editora;
+	}
+	
+	private EditoraDTO formatToUpperDTO(EditoraDTO editoraDTO) {
+		editoraDTO.setNome(editoraDTO.getNome().toUpperCase());
+		return editoraDTO;
 	}
 }
 	

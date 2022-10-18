@@ -1,5 +1,6 @@
 package br.com.residencia.biblioteca.service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import br.com.residencia.biblioteca.repository.EmprestimoRepository;
 
 @Service
 public class EmprestimoService {
+	DecimalFormat df = new DecimalFormat("#.##");
+	
 	@Autowired
 	EmprestimoRepository emprestimoRepository; 
 	
@@ -50,12 +53,23 @@ public class EmprestimoService {
 		return emprestimoRepository.save(emprestimo);
 	}
 	
+	public List<Emprestimo> saveAllEmprestimos(List<Emprestimo> emprestimo) {
+		return emprestimoRepository.saveAll(emprestimo);
+	}
+	
 	public EmprestimoDTO saveEmprestimoDTO(EmprestimoDTO emprestimoDTO) {
 		Emprestimo emprestimo = toEntity(emprestimoDTO);
 		Emprestimo novoEmprestimo = emprestimoRepository.save(emprestimo);
 		
 		EmprestimoDTO emprestimoAtualizadoDTO = converteEntitytoDTO(novoEmprestimo);
 		return emprestimoAtualizadoDTO;
+	}
+	
+	public List<EmprestimoDTO> saveAllEmprestimosDTO(List<EmprestimoDTO> emprestimoDTO) {
+		emprestimoDTO.forEach(emp -> {
+			emprestimoRepository.save(toEntity(emp));
+		});	
+		return emprestimoDTO;
 	}
 
 //	Update
@@ -94,13 +108,13 @@ public class EmprestimoService {
 	}
 	
 //	Convert
-	private EmprestimoDTO converteEntitytoDTO(Emprestimo emprestimo) {
+	public EmprestimoDTO converteEntitytoDTO(Emprestimo emprestimo) {
 		EmprestimoDTO editoraDTO = new EmprestimoDTO();
 		editoraDTO = (modelMapper.map(emprestimo, EmprestimoDTO.class));
 		return editoraDTO;	
 	}
 	
-	private Emprestimo toEntity(EmprestimoDTO emprestimoDTO) {
+	public Emprestimo toEntity(EmprestimoDTO emprestimoDTO) {
 		Emprestimo emprestimo = new Emprestimo();	
 		emprestimo.setDataEmprestimo(emprestimoDTO.getDataEmprestimo());
 		emprestimo.setDataEntrega(emprestimoDTO.getDataEntrega());

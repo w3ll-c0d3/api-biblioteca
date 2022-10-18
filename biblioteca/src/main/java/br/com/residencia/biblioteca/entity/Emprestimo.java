@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-				  property = "codigoEmprestimo")
+				  property = "codigoEmprestimo", scope = Emprestimo.class)
 @Entity
 @Table(name = "emprestimo")
 public class Emprestimo {

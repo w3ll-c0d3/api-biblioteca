@@ -1,7 +1,9 @@
 package br.com.residencia.biblioteca.controller;
 
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import br.com.residencia.biblioteca.dto.ConsultaCnpjDTO;
 import br.com.residencia.biblioteca.dto.EditoraDTO;
 import br.com.residencia.biblioteca.entity.Editora;
 import br.com.residencia.biblioteca.service.EditoraService;
@@ -58,17 +62,40 @@ public class EditoraController {
 			return new ResponseEntity<>(editora, HttpStatus.OK);
 		}
 	}
-
+	
+	@GetMapping("/search/api/{cnpj}")
+	public ResponseEntity<ConsultaCnpjDTO> getCnpj(@PathVariable String cnpj) {
+		ConsultaCnpjDTO consultaCnpjDTO = editoraService.consultaCnpjApiExterna(cnpj);
+		if(consultaCnpjDTO != null) {
+			return new ResponseEntity<>(consultaCnpjDTO, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(consultaCnpjDTO, HttpStatus.NOT_FOUND);
+		}
+	}
+	
 //	Save
 	@PostMapping("/save")
 	public ResponseEntity<Editora> saveEditora(@RequestBody Editora editora) {
-		System.out.println(editora.getNome());
 		return new ResponseEntity<>(editoraService.saveEditora(editora), HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/save/external/{cnpj}")
+	public ResponseEntity<Editora> saveEditoraFromExternalSource(@PathVariable String cnpj) {
+		return new ResponseEntity<>(editoraService.saveFromExternalSource(cnpj), HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/saveAll")
+	public ResponseEntity<List<Editora>> saveAllEditoras(@RequestBody List<Editora> editora) {
+		return new ResponseEntity<>(editoraService.saveAllEditoras(editora), HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/saveAll/dto")
+	public ResponseEntity<List<EditoraDTO>> saveAllEditorasDTO(@RequestBody List<EditoraDTO> editora) {
+		return new ResponseEntity<>(editoraService.saveAllEditorasDTO(editora), HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/save/dto")
 	public ResponseEntity<EditoraDTO> saveEditoraDTO(@Valid @RequestBody EditoraDTO editoraDTO) {
-		System.out.println(editoraDTO.getNome());
 		return new ResponseEntity<>(editoraService.saveEditoraDTO(editoraDTO), HttpStatus.CREATED);
 	}
 

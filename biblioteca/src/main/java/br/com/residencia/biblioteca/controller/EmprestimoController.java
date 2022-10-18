@@ -60,9 +60,19 @@ public class EmprestimoController {
 		return new ResponseEntity<>(emprestimoService.saveEmprestimo(emprestimo), HttpStatus.OK);
 	}
 	
+	@PostMapping("/saveAll")
+	public ResponseEntity<List<Emprestimo>> saveAllEmprestimos(@RequestBody List<Emprestimo> emprestimo) {
+		return new ResponseEntity<>(emprestimoService.saveAllEmprestimos(emprestimo), HttpStatus.OK);
+	}
+	
 	@PostMapping("/save/dto")
 	public ResponseEntity<EmprestimoDTO> saveEmprestimoDTO(@RequestBody EmprestimoDTO emprestimoDTO) {
 		return new ResponseEntity<>(emprestimoService.saveEmprestimoDTO(emprestimoDTO), HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/saveAll/dto")
+	public ResponseEntity<List<EmprestimoDTO>> saveAllEmprestimosDTO(@RequestBody List<EmprestimoDTO> emprestimo) {
+		return new ResponseEntity<>(emprestimoService.saveAllEmprestimosDTO(emprestimo), HttpStatus.OK);
 	}
 
 //	Delete

@@ -47,10 +47,19 @@ public class LivroService {
 	
 //	Save
 	public Livro saveLivro(Livro livro) {
+		livro = formatToUpper(livro);
 		return livroRepository.save(livro);
 	}
 	
+	public List<Livro> saveAllLivros(List<Livro> livro) {
+		livro.forEach(lvr -> {
+			formatToUpper(lvr);
+		});
+		return livroRepository.saveAll(livro);
+	}
+	
 	public LivroDTO saveLivroDTO(LivroDTO livroDTO) {
+		livroDTO = formatToUpperDTO(livroDTO);
 		Livro livro = toEntity(livroDTO);
 		Livro novoLivro = livroRepository.save(livro);
 		
@@ -58,8 +67,17 @@ public class LivroService {
 		return livroAtualizadoDTO;
 	}
 	
+	public List<LivroDTO> saveAllLivrosDTO(List<LivroDTO> livroDTO) {
+		livroDTO.forEach(lvr -> {
+			formatToUpperDTO(lvr);
+			livroRepository.save(toEntity(lvr));
+		});
+		return livroDTO;
+	}
+	
 //	Update
 	public Livro updateLivro(Livro livro, Integer id) {
+		livro = formatToUpper(livro);
 		Livro livroExistenteNoBanco = getLivroById(id);
 		
 		livroExistenteNoBanco.setCodigoIsbn(livro.getCodigoIsbn());
@@ -72,6 +90,7 @@ public class LivroService {
 	}
 	
 	public LivroDTO updateLivroDTO(LivroDTO livroDTO, Integer id) {
+		livroDTO = formatToUpperDTO(livroDTO);
 		Livro livroExistenteNoBanco = getLivroById(id);
 		LivroDTO livroAtualizadoDTO = new LivroDTO();
 		if(livroExistenteNoBanco != null) {
@@ -107,5 +126,18 @@ public class LivroService {
 		livro.setNomeAutor(livroDTO.getNomeAutor());
 		livro.setNomeLivro(livroDTO.getNomeLivro());
 		return livro;	
+	}
+	
+//	Format
+	private Livro formatToUpper(Livro livro) {
+		livro.setNomeAutor(livro.getNomeAutor().toUpperCase());
+		livro.setNomeLivro(livro.getNomeLivro().toUpperCase());
+		return livro;
+	}
+	
+	private LivroDTO formatToUpperDTO(LivroDTO livroDTO) {
+		livroDTO.setNomeAutor(livroDTO.getNomeAutor().toUpperCase());
+		livroDTO.setNomeLivro(livroDTO.getNomeLivro().toUpperCase());
+		return livroDTO;
 	}
 }

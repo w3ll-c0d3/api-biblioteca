@@ -60,12 +60,27 @@ public class AlunoController {
 		}
 	}
 	
+	@GetMapping("/search/aluno-emprestimo/dto")
+	public ResponseEntity<List<AlunoDTO>> getAllAlunosEmprestimosDTO() {
+		return new ResponseEntity<>(alunoService.getAllEmprestimosAlunosDTO(), HttpStatus.OK);
+	}
+	
 //	Save
 	@PostMapping("/save")
 	public ResponseEntity<Aluno> saveAluno(@RequestBody Aluno aluno) {
 		return new ResponseEntity<>(alunoService.saveAluno(aluno), HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/saveAll")
+	public ResponseEntity<List<Aluno>> saveAllAlunos(@RequestBody List<Aluno> aluno) {
+		return new ResponseEntity<>(alunoService.saveAllAluno(aluno), HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/saveAll/dto")
+	public ResponseEntity<List<AlunoDTO>> saveAllAlunosDTO(@RequestBody List<AlunoDTO> alunoDTO) {
+		return new ResponseEntity<>(alunoService.saveAllAlunosDTO(alunoDTO), HttpStatus.CREATED);
+	}
+		
 	@PostMapping("/save/dto")
 	public ResponseEntity<AlunoDTO> saveAlunoDTO(@RequestBody AlunoDTO alunoDTO) {
 		System.out.println(alunoDTO.getNome());
@@ -77,6 +92,11 @@ public class AlunoController {
 	public ResponseEntity<Aluno> deleteAluno(@PathVariable Integer id) {
 		return new ResponseEntity<>(alunoService.deleteAluno(id), HttpStatus.OK);
 	}
+	
+//	@DeleteMapping("/deleteAll/{id}")
+//	public ResponseEntity<Aluno> deleteAllAlunos(@PathVariable Integer id) {
+//		return new ResponseEntity<>(alunoService.deleteAllAlunos(id), HttpStatus.OK);
+//	}
 	
 	@DeleteMapping("/delete/dto/{id}")
 	public ResponseEntity<AlunoDTO> deleteAlunoDTO(@PathVariable Integer id) {

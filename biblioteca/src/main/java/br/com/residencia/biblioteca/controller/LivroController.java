@@ -60,11 +60,21 @@ public class LivroController {
 		return new ResponseEntity<>(livroService.saveLivro(livro), HttpStatus.OK);
 	}
 	
+	@PostMapping("/saveAll")
+	public ResponseEntity<List<Livro>> saveAllLivros(@RequestBody List<Livro> livro) {
+		return new ResponseEntity<>(livroService.saveAllLivros(livro), HttpStatus.OK);
+	}
+	
 	@PostMapping("/save/dto")
 	public ResponseEntity<LivroDTO> saveLivroDTO(@RequestBody LivroDTO livroDTO) {
 		return new ResponseEntity<>(livroService.saveLivroDTO(livroDTO), HttpStatus.OK);
 	}
-
+	
+	@PostMapping("/saveAll/dto")
+	public ResponseEntity<List<LivroDTO>> saveAllLivrosDTO(@RequestBody List<LivroDTO> livroDTO) {
+		return new ResponseEntity<>(livroService.saveAllLivrosDTO(livroDTO), HttpStatus.OK);
+	}
+	
 //	Delete
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Livro> deleteLivro(@PathVariable Integer id) {

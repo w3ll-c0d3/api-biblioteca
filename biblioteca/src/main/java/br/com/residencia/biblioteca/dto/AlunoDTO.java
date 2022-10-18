@@ -1,18 +1,7 @@
 package br.com.residencia.biblioteca.dto;
 
 import java.time.Instant;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.util.List;
 
 public class AlunoDTO {
 	private Integer numeroMatriculaAluno;
@@ -32,10 +21,20 @@ public class AlunoDTO {
 	private String bairro;
 
 	private String cidade;
+	
+	private List<EmprestimoDTO> emprestimos;
 
 //	Getters and Setters
 	public String getNome() {
 		return nome;
+	}
+
+	public List<EmprestimoDTO> getEmprestimos() {
+		return emprestimos;
+	}
+
+	public void setEmprestimos(List<EmprestimoDTO> emprestimos) {
+		this.emprestimos = emprestimos;
 	}
 
 	public Integer getNumeroMatriculaAluno() {
