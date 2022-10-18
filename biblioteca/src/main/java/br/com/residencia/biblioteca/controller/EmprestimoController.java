@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import br.com.residencia.biblioteca.dto.EmprestimoDTO;
 import br.com.residencia.biblioteca.entity.Emprestimo;
 import br.com.residencia.biblioteca.service.EmprestimoService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -28,9 +28,15 @@ public class EmprestimoController {
 	@Autowired
 	EmprestimoService emprestimoService;
 
+//	Search
 	@GetMapping("/search")
 	public ResponseEntity<List<Emprestimo>> getAllEmprestimos() {
 		return new ResponseEntity<>(emprestimoService.getAllEmprestimos(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/search/dto")
+	public ResponseEntity<List<EmprestimoDTO>> getAllEmprestimosDTO() {
+		return new ResponseEntity<>(emprestimoService.getAllEmprestimosDTO(), HttpStatus.OK);
 	}
 
 	@GetMapping("/search/{id}")
@@ -38,18 +44,46 @@ public class EmprestimoController {
 		return new ResponseEntity<>(emprestimoService.getEmprestimoById(id), HttpStatus.OK);
 	}
 
+	@GetMapping("/search/dto/{id}")
+	public ResponseEntity<EmprestimoDTO> getEmprestimoDtoById(@PathVariable Integer id) {
+		EmprestimoDTO emprestimo = emprestimoService.getEmprestimoDtoById(id);
+		if(emprestimo == null) {			
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(emprestimo, HttpStatus.OK);
+		}
+	}
+	
+//	Save
 	@PostMapping("/save")
 	public ResponseEntity<Emprestimo> saveEmprestimo(@RequestBody Emprestimo emprestimo) {
 		return new ResponseEntity<>(emprestimoService.saveEmprestimo(emprestimo), HttpStatus.OK);
 	}
 	
+	@PostMapping("/save/dto")
+	public ResponseEntity<EmprestimoDTO> saveEmprestimoDTO(@RequestBody EmprestimoDTO emprestimoDTO) {
+		return new ResponseEntity<>(emprestimoService.saveEmprestimoDTO(emprestimoDTO), HttpStatus.CREATED);
+	}
+
+//	Delete
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Emprestimo> deleteEmprestimo(@PathVariable Integer id) {
 		return new ResponseEntity<>(emprestimoService.deleteEmprestimo(id), HttpStatus.OK);
 	}
+
+	@DeleteMapping("/delete/dto/{id}")
+	public ResponseEntity<EmprestimoDTO> deleteEmprestimoDTO(@PathVariable Integer id) {
+		return new ResponseEntity<>(emprestimoService.deleteEmprestimoDTO(id), HttpStatus.OK);
+	}
 	
+//	Update
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Emprestimo> updateEmprestimo(@RequestBody Emprestimo emprestimo, @PathVariable Integer id) {
 		return new ResponseEntity<>(emprestimoService.updateEmprestimo(emprestimo, id), HttpStatus.OK);
+	}
+	
+	@PutMapping("/update/dto/{id}")
+	public ResponseEntity<EmprestimoDTO> updateEmprestimoDTO(@RequestBody EmprestimoDTO emprestimoDTO, @PathVariable Integer id) {
+		return new ResponseEntity<>(emprestimoService.updateEmprestimoDTO(emprestimoDTO, id), HttpStatus.OK);
 	}
 }

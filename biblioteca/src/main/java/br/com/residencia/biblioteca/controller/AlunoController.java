@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.residencia.biblioteca.dto.AlunoDTO;
 import br.com.residencia.biblioteca.entity.Aluno;
 import br.com.residencia.biblioteca.service.AlunoService;
 
@@ -28,6 +29,7 @@ public class AlunoController {
 	@Autowired
 	AlunoService alunoService;
 
+//	Search
 	@GetMapping("/search")
 	public ResponseEntity<List<Aluno>> getAllAlunos() {
 		return new ResponseEntity<>(alunoService.getAllAlunos(), HttpStatus.OK);
@@ -42,19 +44,53 @@ public class AlunoController {
 			return new ResponseEntity<>(aluno, HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping("/search/dto")
+	public ResponseEntity<List<AlunoDTO>> getAllAlunosDTO() {
+		return new ResponseEntity<>(alunoService.getAllAlunosDTO(), HttpStatus.OK);
+	}
 
+	@GetMapping("/search/dto/{id}")
+	public ResponseEntity<AlunoDTO> getEditoraDtoById(@PathVariable Integer id) {
+		AlunoDTO aluno = alunoService.getAlunoDtoById(id);
+		if(aluno == null) {			
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} else {
+			return new ResponseEntity<>(aluno, HttpStatus.OK);
+		}
+	}
+	
+//	Save
 	@PostMapping("/save")
 	public ResponseEntity<Aluno> saveAluno(@RequestBody Aluno aluno) {
 		return new ResponseEntity<>(alunoService.saveAluno(aluno), HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/save/dto")
+	public ResponseEntity<AlunoDTO> saveAlunoDTO(@RequestBody AlunoDTO alunoDTO) {
+		System.out.println(alunoDTO.getNome());
+		return new ResponseEntity<>(alunoService.saveAlunoDTO(alunoDTO), HttpStatus.CREATED);
+	}
+
+//	Delete
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Aluno> deleteAluno(@PathVariable Integer id) {
 		return new ResponseEntity<>(alunoService.deleteAluno(id), HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/delete/dto/{id}")
+	public ResponseEntity<AlunoDTO> deleteAlunoDTO(@PathVariable Integer id) {
+		return new ResponseEntity<>(alunoService.deleteAlunoDTO(id), HttpStatus.OK);
+	}
+
+//	Update
 	@PutMapping("/update/{id}")
 	public ResponseEntity<Aluno> updateAluno(@RequestBody Aluno aluno, @PathVariable Integer id) {
 		return new ResponseEntity<>(alunoService.updateAluno(aluno, id), HttpStatus.OK);
+	}
+	
+	@PutMapping("/update/dto/{id}")
+	public ResponseEntity<AlunoDTO> updateAlunoDTO(@RequestBody AlunoDTO alunoDTO, @PathVariable Integer id) {
+		return new ResponseEntity<>(alunoService.updateAlunoDTO(alunoDTO, id), HttpStatus.OK);
 	}
 }

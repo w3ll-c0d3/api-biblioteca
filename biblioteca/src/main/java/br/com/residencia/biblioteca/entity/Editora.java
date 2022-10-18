@@ -18,7 +18,7 @@ public class Editora {
 	private int codigoEditora;	
 	
 	@Column(name = "nome")
-	private String nome;
+	private String nomeEditora;
 
 	@OneToMany(mappedBy = "editora")
 	private Set<Livro> livros;
@@ -28,16 +28,16 @@ public class Editora {
 		return codigoEditora;
 	}
 
-	public void setCodigoEditora(int codigoEditora) {
+	public void setCodigoEditora(Integer codigoEditora) {
 		this.codigoEditora = codigoEditora;
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeEditora;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeEditora = nome;
 	}
 
 	public Set<Livro> getLivros() {
