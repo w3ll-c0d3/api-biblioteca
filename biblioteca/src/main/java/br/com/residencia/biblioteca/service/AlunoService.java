@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.residencia.biblioteca.dto.AlunoDTO;
+import br.com.residencia.biblioteca.dto.AlunoEmprestimoDTO;
 import br.com.residencia.biblioteca.dto.EmprestimoDTO;
+import br.com.residencia.biblioteca.dto.ResumoEmprestimoDTO;
 import br.com.residencia.biblioteca.entity.Aluno;
 import br.com.residencia.biblioteca.entity.Emprestimo;
 import br.com.residencia.biblioteca.repository.AlunoRepository;
@@ -74,6 +76,35 @@ public class AlunoService {
 			listaAlunosDTO.add(alunoDTO);
 		});
 		return listaAlunosDTO;
+	}
+	
+	public List<AlunoEmprestimoDTO> filterAlunoEmprestimo() {
+		List<AlunoDTO> alunos = getAllEmprestimosAlunosDTO();
+		List<AlunoEmprestimoDTO> alunosEmprestimosDTO = new ArrayList<>();
+		for(AlunoDTO aln: alunos) {
+			AlunoEmprestimoDTO alunoTemp = new AlunoEmprestimoDTO();
+			alunoTemp.setNumeroMatriculaAluno(aln.getNumeroMatriculaAluno());
+			alunoTemp.setNome(aln.getNome());
+			alunoTemp.setCpf(aln.getCpf());
+			if(aln.getEmprestimos().size() > 0) {
+				List<ResumoEmprestimoDTO> listaResumo = new ArrayList<>();
+				for(int i = 0; i < aln.getEmprestimos().size(); i++) {
+					ResumoEmprestimoDTO resumo = new ResumoEmprestimoDTO();
+					try {
+						resumo.setCodigoEmprestimo(aln.getEmprestimos().get(i).getCodigoEmprestimo());
+						resumo.setDataEmprestimo(aln.getEmprestimos().get(i).getDataEmprestimo());
+						resumo.setDataEntrega(aln.getEmprestimos().get(i).getDataEntrega());
+						listaResumo.add(resumo);
+					} catch (Exception e){
+						e.printStackTrace();
+						continue;
+					}
+				}
+				alunoTemp.setResumoEmprestimoDTO(listaResumo);
+			}
+			alunosEmprestimosDTO.add(alunoTemp);
+		}
+		return alunosEmprestimosDTO;
 	}
 
 //	Save
