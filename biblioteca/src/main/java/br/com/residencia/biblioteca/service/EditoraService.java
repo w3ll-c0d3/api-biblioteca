@@ -143,6 +143,7 @@ public class EditoraService {
 		Editora editoraExistenteNoBanco = getEditoraById(id);
 		EditoraDTO editoraAtualizadaDTO = new EditoraDTO();
 		if(editoraExistenteNoBanco != null) {
+			editoraDTO.setCodigoEditora(editoraExistenteNoBanco.getCodigoEditora());
 			editoraExistenteNoBanco = toEntity(editoraDTO);
 			Editora editoraAtualizada = editoraRepository.save(editoraExistenteNoBanco);
 			editoraAtualizadaDTO = converteEntitytoDTO(editoraAtualizada);
