@@ -31,6 +31,9 @@ public class EditoraService {
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	EmailService emailService;
 
 //	Get
 	public List<Editora> getAllEditora() {
@@ -135,6 +138,7 @@ public class EditoraService {
 		editora = formatToUpper(editora);
 		Editora editoraExistenteNoBanco = getEditoraById(id);
 		editoraExistenteNoBanco.setNome(editora.getNome());
+		emailService.sendMail("wellington.lima6@aluno.senai.br", "Teste", "Body");
 		return editoraRepository.save(editoraExistenteNoBanco);
 	}
 	
