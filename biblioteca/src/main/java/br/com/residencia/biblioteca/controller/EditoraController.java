@@ -57,6 +57,11 @@ public class EditoraController {
 		return new ResponseEntity<>(editoraService.getEditoraById(id), HttpStatus.OK);
 	}
 	
+	@GetMapping("/search/id/{id}")
+	public ResponseEntity<Editora> getEditoraByIdTwo(@PathVariable Integer id) {
+		return new ResponseEntity<>(editoraService.getEditoraById(id), HttpStatus.OK);
+	}
+	
 	@GetMapping("/search/dto/{id}")
 	public ResponseEntity<EditoraDTO> getEditoraDtoById(@PathVariable Integer id) {
 		EditoraDTO editora = editoraService.getEditoraDtoById(id);

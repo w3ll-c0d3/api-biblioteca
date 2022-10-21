@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import br.com.residencia.biblioteca.dto.LivroDTO;
 import br.com.residencia.biblioteca.entity.Livro;
+import br.com.residencia.biblioteca.exception.NoSuchElementFoundException;
 import br.com.residencia.biblioteca.service.LivroService;
 
 @RestController
@@ -44,6 +46,17 @@ public class LivroController {
 		return new ResponseEntity<>(livroService.getLivroById(id), HttpStatus.OK);
 	}
 
+	@GetMapping("/search/id/{id}")
+	public ResponseEntity<Livro> getLivroById2(@PathVariable Integer id) {
+		Livro livro = livroService.getLivroById(id); 
+		if(livro == null) {
+			String message = String.format("Id %d não foi encontrado!", id);
+			throw new NoSuchElementFoundException(message);
+		} else {
+			return new ResponseEntity<>(livroService.getLivroById(id), HttpStatus.OK);
+		}
+	}
+	
 	@GetMapping("/search/dto/{id}")
 	public ResponseEntity<LivroDTO> getLivroDtoById(@PathVariable Integer id) {
 		LivroDTO livro = livroService.getLivroDtoById(id);
