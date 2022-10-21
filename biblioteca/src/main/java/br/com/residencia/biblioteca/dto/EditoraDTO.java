@@ -6,7 +6,10 @@ public class EditoraDTO {
 	private Integer codigoEditora;
 	private String nome;
 	private List<LivroDTO> listaLivrosDTO;
-
+	private String imagemNome;
+	private String imagemFileName;
+	private String imagemUrl;
+	
 	public EditoraDTO() {
 	}
 
@@ -38,5 +41,29 @@ public class EditoraDTO {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getImagemNome() {
+		return imagemNome;
+	}
+
+	public void setImagemNome(String imagemNome) {
+		this.imagemNome = imagemNome;
+	}
+
+	public String getImagemFileName() {
+		return imagemFileName;
+	}
+
+	public void setImagemFileName(String imagemFileName) {
+		this.imagemFileName = imagemFileName;
+	}
+
+	public String getImagemUrl() {
+		return imagemUrl;
+	}
+
+	public void setImagemUrl(String imagemUrl) {
+		this.imagemUrl = imagemUrl;
 	}
 }
