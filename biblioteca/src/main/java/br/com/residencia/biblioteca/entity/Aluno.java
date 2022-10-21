@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -28,7 +30,7 @@ public class Aluno {
 	
 	@Column(name = "datanascimento")
 	private Instant dataNascimento;
-	
+
 	@Column(name = "cpf")
 	private String cpf;
 

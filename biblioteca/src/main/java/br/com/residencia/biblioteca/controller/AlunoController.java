@@ -1,6 +1,9 @@
 package br.com.residencia.biblioteca.controller;
 
 import java.util.List;
+import java.util.regex.Pattern;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.residencia.biblioteca.dto.AlunoDTO;
 import br.com.residencia.biblioteca.dto.AlunoEmprestimoDTO;
 import br.com.residencia.biblioteca.entity.Aluno;
+import br.com.residencia.biblioteca.exception.ErrorResponse;
 import br.com.residencia.biblioteca.service.AlunoService;
 
 @RestController
@@ -72,8 +76,24 @@ public class AlunoController {
 	}
 //	Save
 	@PostMapping("/save")
-	public ResponseEntity<Aluno> saveAluno(@RequestBody Aluno aluno) {
-		return new ResponseEntity<>(alunoService.saveAluno(aluno), HttpStatus.CREATED);
+	public ResponseEntity<Object> saveAluno(@RequestBody Aluno aluno) {
+		if(verificaCpf(aluno.getCpf()) == null) {
+			HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
+			ErrorResponse error = new ErrorResponse(httpStatus.value(), "O cpf é obrigatório e deve conter 11 digitos");
+			return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+		} else {
+			return new ResponseEntity<>(aluno, HttpStatus.CREATED);
+		}
+	}
+	
+	private static String verificaCpf(String cpf) {
+		String cpfValido = "[\\d]{11}";
+		boolean matches = false;
+		matches = Pattern.matches(cpfValido, cpf);
+		if (!matches) {
+			return null;
+		}
+		return cpf;
 	}
 	
 	@PostMapping("/saveAll")
