@@ -1,6 +1,7 @@
 package br.com.residencia.biblioteca.controller;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,10 +52,21 @@ public class LivroController {
 		Livro livro = livroService.getLivroById(id); 
 		if(livro == null) {
 			String message = String.format("Id %d não foi encontrado!", id);
-			throw new NoSuchElementFoundException(message);
+			throw new NoSuchElementException(message);
 		} else {
 			return new ResponseEntity<>(livroService.getLivroById(id), HttpStatus.OK);
 		}
+	}
+	
+	@GetMapping("/try-catch/{id}")
+	public ResponseEntity<Livro> getLivroById3(@PathVariable Integer id) {
+		Livro livro = new Livro();
+		try {
+			livro = livroService.getLivroById(id);
+		}catch(Exception ex) {
+			throw new NoSuchElementFoundException("Não foi encontrado livro com o id "+id);
+		}
+		return new ResponseEntity<>(livro, HttpStatus.OK);
 	}
 	
 	@GetMapping("/search/dto/{id}")

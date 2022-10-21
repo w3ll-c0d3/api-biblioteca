@@ -34,7 +34,8 @@ public class LivroService {
 	}
 	
 	public Livro getLivroById(Integer id) {
-		return livroRepository.findById(id).orElse(null);
+		return livroRepository.findById(id).get();
+//		return livroRepository.findById(id).orElse(null);
 	}
 	
 	public LivroDTO getLivroDtoById(Integer id) {
